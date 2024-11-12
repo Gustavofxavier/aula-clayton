@@ -1,0 +1,122 @@
+import java.util.Scanner;
+
+public class Lampada {
+
+    private String marca;
+    private int voltagem;
+    private String tipo;
+    private String modelo;
+    private String cor;
+    private double preco;
+    private String garantia;
+    private boolean ligada;
+    
+    public Lampada() {}
+    
+    public String getMarca() { return marca; }
+    public void setMarca(String marca) { this.marca = marca; }
+    public int getVoltagem() { return voltagem; }
+    public void setVoltagem(int voltagem) { this.voltagem = voltagem; }
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
+    public String getModelo() { return modelo; }
+    public void setModelo(String modelo) { this.modelo = modelo; }
+    public String getCor() { return cor; }
+    public void setCor(String cor) { this.cor = cor; }
+    public double getPreco() { return preco; }
+    public void setPreco(double preco) { this.preco = preco; }
+    public String getGarantia() { return garantia; }
+    public void setGarantia(String garantia) { this.garantia = garantia; }
+    public boolean isLigada() { return ligada; }
+    public void setLigada(boolean ligada) { this.ligada = ligada; }
+    
+    public void ligar() {
+        if (!ligada) {
+            ligada = true;
+            System.out.println("# Lâmpada Ligada #");
+        } else {
+            System.out.println("A lâmpada já está ligada.");
+        }
+    }
+    
+    public void desligar() {
+        if (ligada) {
+            ligada = false;
+            System.out.println("# Lâmpada Desligada #");
+        } else {
+            System.out.println("A lâmpada já está desligada.");
+        }
+    }
+    
+    public void mostrarStatus() {
+        String status = ligada ? "ligada" : "desligada";
+        System.out.println("A lâmpada está " + status + ".");
+    }
+    
+    public void mudarStatus() {
+        if (ligada) {
+            desligar();
+        } else {
+            ligar();
+        }
+    }
+    
+    public void inserirValores() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite a marca da lâmpada: ");
+        this.marca = scanner.nextLine();
+
+        System.out.print("Digite a voltagem da lâmpada: ");
+        this.voltagem = scanner.nextInt();
+        scanner.nextLine(); // Consumir a nova linha
+
+        System.out.print("Digite o tipo da lâmpada: ");
+        this.tipo = scanner.nextLine();
+
+        System.out.print("Digite o modelo da lâmpada: ");
+        this.modelo = scanner.nextLine();
+
+        System.out.print("Digite a cor da lâmpada: ");
+        this.cor = scanner.nextLine();
+
+        System.out.print("Digite o preço da lâmpada: ");
+        this.preco = scanner.nextDouble();
+        scanner.nextLine(); // Consumir a nova linha
+
+        System.out.print("Digite a garantia da lâmpada: ");
+        this.garantia = scanner.nextLine();
+
+        System.out.println("Valores inseridos com sucesso!");
+    }
+    
+    public static void main(String[] args) {
+        Lampada lampada = new Lampada();
+        lampada.inserirValores();
+
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+
+        do {
+            System.out.println("Ligar/Desligar lâmpada? 0 – Sair / 1 – Sim / 2 – Não");
+            opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    lampada.mudarStatus();
+                    break;
+                case 2:
+                    lampada.mostrarStatus();
+                    break;
+                case 0:
+                    System.out.println("*** Você encerrou o software. ***");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+            }
+        } while (opcao != 0);
+
+        scanner.close();
+    }
+}
