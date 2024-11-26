@@ -1,0 +1,91 @@
+import java.util.Scanner;
+
+class JogoDaVel1ha {
+    public static void main(String[] args) {
+        char[][] tabuleiro = new char[3][3];
+        inicializarTabuleiro(tabuleiro);
+        boolean fimDeJogo = false;
+        char jogadorAtual = 'X';
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (!fimDeJogo) {
+            mostrarTabuleiro(tabuleiro);
+
+            System.out.print("Jogador " + jogadorAtual + ", digite a linha (1-3): ");
+            int linha = scanner.nextInt() - 1;
+
+            System.out.print("Jogador " + jogadorAtual + ", digite a coluna (1-3): ");
+            int coluna = scanner.nextInt() - 1;
+
+            if (verificarJogadaValida(tabuleiro, linha, coluna)) {
+                tabuleiro[linha][coluna] = jogadorAtual;
+                fimDeJogo = verificarVencedor(tabuleiro, jogadorAtual);
+
+                if (!fimDeJogo) {
+                    jogadorAtual = (jogadorAtual == 'X') ? 'O' : 'X';
+                }
+            } else {
+                System.out.println("Jogada inválida! Tente novamente.");
+            }
+        }
+
+        mostrarTabuleiro(tabuleiro);
+
+        if (fimDeJogo) {
+            System.out.println("O jogador " + jogadorAtual + " venceu!");
+        } else {
+            System.out.println("Deu velha!");
+        }
+    }
+
+    private static void inicializarTabuleiro(char[][] tabuleiro) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                tabuleiro[i][j] = '-';
+            }
+        }
+    }
+
+    private static void mostrarTabuleiro(char[][] tabuleiro) {
+        System.out.println("-------------");
+        for (int i = 0; i < 3; i++) {
+            System.out.print("| ");
+            for (int j = 0; j < 3; j++) {
+                System.out.print(tabuleiro[i][j] + " | ");
+            }
+            System.out.println();
+            System.out.println("-------------");
+        }
+    }
+
+    private static boolean verificarJogadaValida(char[][] tabuleiro, int linha, int coluna) {
+        return linha >= 0 && linha < 3 && coluna >= 0 && coluna < 3 && tabuleiro[linha][coluna] == '-';
+    }
+
+    private static boolean verificarVencedor(char[][] tabuleiro, char jogador) {
+        // Verifica linhas
+        for (int i = 0; i < 3; i++) {
+            if (tabuleiro[i][0] == jogador && tabuleiro[i][1] == jogador && tabuleiro[i][2] == jogador) {
+                return true;
+            }
+        }
+
+        // Verifica colunas
+        for (int j = 0; j < 3; j++) {
+            if (tabuleiro[0][j] == jogador && tabuleiro[1][j] == jogador && tabuleiro[2][j] == jogador) {
+                return true;
+            }
+        }
+
+        // Verifica diagonais
+        if (tabuleiro[0][0] == jogador && tabuleiro[1][1] == jogador && tabuleiro[2][2] == jogador) {
+            return true;
+        }
+        if (tabuleiro[0][2] == jogador && tabuleiro[1][1] == jogador && tabuleiro[2][0] == jogador) {
+            return true;
+        }
+
+        return false;
+    }
+}
